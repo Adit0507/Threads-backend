@@ -1,3 +1,4 @@
+import { User } from ".";
 import UserService, { CreateUserPayload } from "../../services/user";
 
 const queries = {
@@ -12,6 +13,17 @@ const queries = {
     
     return token 
   },
+
+  getCurrentLoggedInUser: async(_: any, parameters: any, context: any) => {
+    if(context && context.user){
+      const id = context.user.id
+      const user = await UserService.getUserById(id)
+
+      return user
+    }    
+
+    throw new Error("Don't know you")
+  }
 };
 
 const mutations = {
